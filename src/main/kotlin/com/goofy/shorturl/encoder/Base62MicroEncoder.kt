@@ -1,10 +1,8 @@
 package com.goofy.shorturl.encoder
 
 import com.goofy.shorturl.entity.vo.EncoderType
-import org.springframework.stereotype.Component
 
-@Component
-class Base62UrlEncoder : UrlEncoder {
+class Base62MicroEncoder : MicroEncoder {
     override val encoderType = EncoderType.BASE62
     private val base62 = SMALL_LETTER + NUMBER_LETTER + CAPITAL_LETTER
 

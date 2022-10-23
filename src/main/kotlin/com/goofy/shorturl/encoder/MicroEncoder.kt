@@ -2,7 +2,7 @@ package com.goofy.shorturl.encoder
 
 import com.goofy.shorturl.entity.vo.EncoderType
 
-interface UrlEncoder {
+interface MicroEncoder {
     val encoderType: EncoderType
 
     fun encode(url: String): String

@@ -2,7 +2,7 @@ package com.goofy.shorturl.service
 
 import com.goofy.shorturl.controller.dto.request.ShortUrlRequest
 import com.goofy.shorturl.controller.dto.response.ShortUrlResponse
-import com.goofy.shorturl.encoder.Base62UrlEncoder
+import com.goofy.shorturl.encoder.MicroEncoder
 import com.goofy.shorturl.entity.ShortUrl
 import com.goofy.shorturl.exception.ShortUrlNotFoundException
 import com.goofy.shorturl.repository.ShortUrlRepository
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ShortUrlService(
     private val shotUrlRepository: ShortUrlRepository,
-    private val base62UrlEncoder: Base62UrlEncoder
+    private val microEncoder: MicroEncoder
 ) {
     private val logger = KotlinLogging.logger {}
 
@@ -33,7 +33,7 @@ class ShortUrlService(
 
         logger.info { "register short url | url : ${request.url}" }
 
-        val encodedKey = base62UrlEncoder.encode(shortUrl.id.toString())
+        val encodedKey = microEncoder.encode(shortUrl.id.toString())
 
         return ShortUrlResponse(encodedKey, shortUrl)
     }
@@ -42,7 +42,7 @@ class ShortUrlService(
         val shortUrl = shotUrlRepository.findByIdOrNull(id)
             ?: throw ShortUrlNotFoundException("short url을 찾을 수 없습니다. shortUrlId : $id")
 
-        val encodedKey = base62UrlEncoder.encode(shortUrl.id.toString())
+        val encodedKey = microEncoder.encode(shortUrl.id.toString())
 
         return ShortUrlResponse(encodedKey, shortUrl)
     }
@@ -52,7 +52,7 @@ class ShortUrlService(
 
         return shotUrlRepository.findAll(pageable)
             .map {
-                val encodedKey = base62UrlEncoder.encode(it.id.toString())
+                val encodedKey = microEncoder.encode(it.id.toString())
                 ShortUrlResponse(encodedKey, it)
             }
     }
@@ -71,7 +71,7 @@ class ShortUrlService(
 
         logger.info { "edit short url | id : $id" }
 
-        val encodedKey = base62UrlEncoder.encode(changedShortUrl.id.toString())
+        val encodedKey = microEncoder.encode(changedShortUrl.id.toString())
 
         return ShortUrlResponse(encodedKey, changedShortUrl)
     }
