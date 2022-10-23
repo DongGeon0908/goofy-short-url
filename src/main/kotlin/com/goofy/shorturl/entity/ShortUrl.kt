@@ -16,12 +16,12 @@ class ShortUrl(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = -1L,
 
-    @Column(name = "encoder_type")
-    val encoderType: EncoderType,
+    val description: String? = null,
 
-    @Column(name = "origin_url")
-    val originUrl: String,
+    @Column(name = "type")
+    val type: EncoderType,
 
-    @Column(name = "encoded_url")
-    val encodedUrl: String
+    @Column(name = "url")
+    val url: String
 ) : BaseEntity()
+// TODO : id로 변경 , 100000
