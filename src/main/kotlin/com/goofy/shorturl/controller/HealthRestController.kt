@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(value = ["/", "health"], produces = [APPLICATION_JSON_UTF8_VALUE])
-class HealthController(
+class HealthRestController(
     private val environment: Environment
 ) {
     @GetMapping
