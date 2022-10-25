@@ -33,7 +33,7 @@ class ShortUrlRestController(
     @ApiOperation("Short Url 단건 조회")
     @GetMapping("/{id}")
     fun get(
-        @PathVariable id: Long
+        @PathVariable id: Int
     ) = shortUrlService.findById(id).wrapOk()
 
     @ApiOperation("Short Url 전체 조회")
@@ -46,7 +46,7 @@ class ShortUrlRestController(
     @ApiOperation("Short Url 수정 API")
     @PatchMapping("/{id}")
     fun edit(
-        @PathVariable id: Long,
+        @PathVariable id: Int,
         @RequestBody request: ShortUrlRequest
     ) = shortUrlService.edit(id, request).wrapOk()
 
@@ -54,7 +54,7 @@ class ShortUrlRestController(
     @ApiOperation("Short Url 삭제 API")
     @DeleteMapping("/{id}")
     fun delete(
-        @PathVariable id: Long
+        @PathVariable id: Int
     ) = shortUrlService.delete(id).wrapVoid()
 
     @PostMapping("/test")

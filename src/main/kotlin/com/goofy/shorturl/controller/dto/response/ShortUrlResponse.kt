@@ -4,7 +4,7 @@ import com.goofy.shorturl.entity.ShortUrl
 import com.goofy.shorturl.entity.vo.EncoderType
 
 data class ShortUrlResponse(
-    val id: Long,
+    val id: Int,
     val encodedKey: String,
     val url: String,
     val type: EncoderType,

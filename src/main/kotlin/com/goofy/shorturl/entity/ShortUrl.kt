@@ -8,13 +8,12 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Table
 
-// TODO : INDEX는??
 @Entity
 @Table(name = "short_url")
 class ShortUrl(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = -1L,
+    val id: Int = -1,
 
     var description: String? = null,
 
@@ -24,4 +23,3 @@ class ShortUrl(
     @Column(name = "url")
     var url: String
 ) : BaseEntity()
-// TODO : id로 변경 , 100000

@@ -33,16 +33,16 @@ class ShortUrlService(
 
         logger.info { "register short url | url : ${request.url}" }
 
-        val encodedKey = microEncoder.encode(shortUrl.id.toString())
+        val encodedKey = microEncoder.encode(shortUrl.id)
 
         return ShortUrlResponse(encodedKey, shortUrl)
     }
 
-    fun findById(id: Long): ShortUrlResponse {
+    fun findById(id: Int): ShortUrlResponse {
         val shortUrl = shotUrlRepository.findByIdOrNull(id)
             ?: throw ShortUrlNotFoundException("short url을 찾을 수 없습니다. shortUrlId : $id")
 
-        val encodedKey = microEncoder.encode(shortUrl.id.toString())
+        val encodedKey = microEncoder.encode(shortUrl.id)
 
         return ShortUrlResponse(encodedKey, shortUrl)
     }
@@ -52,12 +52,12 @@ class ShortUrlService(
 
         return shotUrlRepository.findAll(pageable)
             .map {
-                val encodedKey = microEncoder.encode(it.id.toString())
+                val encodedKey = microEncoder.encode(it.id)
                 ShortUrlResponse(encodedKey, it)
             }
     }
 
-    fun edit(id: Long, request: ShortUrlRequest): ShortUrlResponse {
+    fun edit(id: Int, request: ShortUrlRequest): ShortUrlResponse {
         val shortUrl = shotUrlRepository.findByIdOrNull(id)
             ?: throw ShortUrlNotFoundException("short url을 찾을 수 없습니다. shortUrlId : $id")
 
@@ -71,12 +71,12 @@ class ShortUrlService(
 
         logger.info { "edit short url | id : $id" }
 
-        val encodedKey = microEncoder.encode(changedShortUrl.id.toString())
+        val encodedKey = microEncoder.encode(changedShortUrl.id)
 
         return ShortUrlResponse(encodedKey, changedShortUrl)
     }
 
-    fun delete(id: Long) {
+    fun delete(id: Int) {
         if (shotUrlRepository.existsById(id)) {
             shotUrlRepository.deleteById(id)
             logger.info { "delete short url | id : $id" }
