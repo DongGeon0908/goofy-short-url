@@ -56,4 +56,10 @@ class ShortUrlRestController(
     fun delete(
         @PathVariable id: Long
     ) = shortUrlService.delete(id).wrapVoid()
+
+    @PostMapping("/test")
+    fun test() {
+        val a = "happy".toCharArray()
+        println(a[0].code)
+    }
 }
