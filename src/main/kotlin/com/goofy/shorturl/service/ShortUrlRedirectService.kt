@@ -11,12 +11,12 @@ class ShortUrlRedirectService(
     private val shortUrlRepository: ShortUrlRepository,
     private val microEncoder: MicroEncoder
 ) {
-    fun getShortUrl(url: String): String {
-        val id = microEncoder.decode(url)
+    fun getShortUrl(key: String): String {
+        val id = microEncoder.decode(key)
 
         val shortUrl = shortUrlRepository.findByIdOrNull(id)
             ?: throw ShortUrlNotFoundException()
 
-        return shortUrl.url
+        return shortUrl.originUrl
     }
 }

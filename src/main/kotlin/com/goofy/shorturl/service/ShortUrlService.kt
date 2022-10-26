@@ -20,22 +20,25 @@ class ShortUrlService(
     private val microEncoder: MicroEncoder
 ) {
     private val logger = KotlinLogging.logger {}
+    private val PREFIX = "localhost:8080/shorten"
 
     @Transactional
     fun register(request: ShortUrlRequest): ShortUrlResponse {
         val shortUrl = shotUrlRepository.save(
             ShortUrl(
-                url = request.url,
+                originUrl = request.url,
                 type = request.type,
                 description = request.description
             )
         )
 
-        logger.info { "register short url | url : ${request.url}" }
+        logger.info { "register origin url | url : ${request.url}" }
 
         val encodedKey = microEncoder.encode(shortUrl.id)
 
-        return ShortUrlResponse(encodedKey, shortUrl)
+        val shortenUrl = PREFIX + encodedKey
+
+        return ShortUrlResponse(encodedKey, shortenUrl, shortUrl)
     }
 
     fun findById(id: Int): ShortUrlResponse {
@@ -44,7 +47,9 @@ class ShortUrlService(
 
         val encodedKey = microEncoder.encode(shortUrl.id)
 
-        return ShortUrlResponse(encodedKey, shortUrl)
+        val shortenUrl = PREFIX + encodedKey
+
+        return ShortUrlResponse(encodedKey, shortenUrl, shortUrl)
     }
 
     fun findAll(page: Int, size: Int): Page<ShortUrlResponse> {
@@ -53,7 +58,8 @@ class ShortUrlService(
         return shotUrlRepository.findAll(pageable)
             .map {
                 val encodedKey = microEncoder.encode(it.id)
-                ShortUrlResponse(encodedKey, it)
+                val shortenUrl = PREFIX + encodedKey
+                ShortUrlResponse(encodedKey, shortenUrl, it)
             }
     }
 
@@ -63,7 +69,7 @@ class ShortUrlService(
 
         val changedShortUrl = shotUrlRepository.save(
             shortUrl.apply {
-                this.url = request.url
+                this.originUrl = request.url
                 this.type = request.type
                 this.description = request.description
             }
@@ -72,8 +78,9 @@ class ShortUrlService(
         logger.info { "edit short url | id : $id" }
 
         val encodedKey = microEncoder.encode(changedShortUrl.id)
+        val shortenUrl = PREFIX + encodedKey
 
-        return ShortUrlResponse(encodedKey, changedShortUrl)
+        return ShortUrlResponse(encodedKey, shortenUrl, changedShortUrl)
     }
 
     fun delete(id: Int) {

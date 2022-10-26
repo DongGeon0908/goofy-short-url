@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
 @Api(tags = ["Short Url Redirect API"])
-@Controller
+@Controller("/shorten")
 class ShortUrlRedirectController(
     private val shortUrlRedirectService: ShortUrlRedirectService
 ) {
-    @GetMapping("/{url}")
-    fun get(@PathVariable url: String) = "redirect:${shortUrlRedirectService.getShortUrl(url)}"
+    @GetMapping("/{key}")
+    fun get(@PathVariable key: String): String {
+        val redirectUrl = shortUrlRedirectService.getShortUrl(key)
+        return "redirect:$redirectUrl"
+    }
 }

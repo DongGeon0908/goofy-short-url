@@ -5,15 +5,17 @@ import com.goofy.shorturl.entity.vo.EncoderType
 
 data class ShortUrlResponse(
     val id: Int,
+    val shortenUrl: String,
     val encodedKey: String,
-    val url: String,
+    val originUrl: String,
     val type: EncoderType,
     val description: String?
 ) {
-    constructor(encodedKey: String, shortUrl: ShortUrl) : this(
+    constructor(encodedKey: String, shortenUrl: String, shortUrl: ShortUrl) : this(
         id = shortUrl.id,
+        shortenUrl = shortenUrl,
         encodedKey = encodedKey,
-        url = shortUrl.url,
+        originUrl = shortUrl.originUrl,
         type = shortUrl.type,
         description = shortUrl.description
     )

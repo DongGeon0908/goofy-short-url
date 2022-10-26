@@ -15,11 +15,11 @@ class ShortUrl(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = -1,
 
-    var description: String? = null,
+    @Column(name = "origin_url")
+    var originUrl: String,
 
     @Column(name = "type")
     var type: EncoderType,
 
-    @Column(name = "url")
-    var url: String
+    var description: String? = null
 ) : BaseEntity()
